@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Calendar, Menu, X } from 'lucide-react'
+import { motion } from 'framer-motion'
 
-export default function Navbar() {
+export default function Navbar({ onOpenSchedule }) {
   const [open, setOpen] = useState(false)
 
   const navItems = [
@@ -29,14 +30,22 @@ export default function Navbar() {
                 {item.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-md bg-[#2e8b57] px-4 py-2 text-white shadow hover:bg-[#256f46] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2e8b57]"
-              aria-label="Schedule your discovery call"
+            <button
+              onClick={onOpenSchedule}
+              className="relative inline-flex items-center gap-2 rounded-md bg-[#2e8b57] px-4 py-2 text-white shadow hover:bg-[#256f46] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2e8b57]"
+              aria-label="Open contact form to schedule your discovery call"
             >
+              {/* subtle pulsing glow */}
+              <motion.span
+                aria-hidden
+                initial={{ boxShadow: '0 0 0 0 rgba(46,139,87,0)' }}
+                animate={{ boxShadow: ['0 0 0 0 rgba(46,139,87,0)', '0 0 0 14px rgba(46,139,87,0.0)'] }}
+                transition={{ duration: 1.2, repeat: Infinity, repeatDelay: 5, ease: 'easeOut' }}
+                className="absolute inset-0 -z-0 rounded-md"
+              />
               <Calendar className="h-4 w-4" aria-hidden="true" />
               <span>Schedule</span>
-            </a>
+            </button>
           </nav>
 
           <button
@@ -62,14 +71,13 @@ export default function Navbar() {
                   {item.label}
                 </a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setOpen(false)}
+              <button
+                onClick={() => { setOpen(false); onOpenSchedule?.() }}
                 className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#2e8b57] px-4 py-2 text-white shadow hover:bg-[#256f46] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2e8b57]"
               >
                 <Calendar className="h-4 w-4" />
                 <span>Schedule</span>
-              </a>
+              </button>
             </nav>
           </div>
         )}

@@ -1,19 +1,17 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, PlayCircle } from 'lucide-react'
+import SceneContainer from './3d/SceneContainer'
+import HeroOrb from './3d/HeroOrb'
 
-export default function HeroSection() {
+export default function HeroSection({ onOpenSchedule }) {
   return (
     <section id="home" className="relative isolate">
-      {/* Animated gradient background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-      >
-        <div className="absolute -inset-[20%] bg-[radial-gradient(60%_60%_at_50%_40%,rgba(46,139,87,0.25)_0%,rgba(26,77,46,0.15)_35%,transparent_70%)]" />
-        <div className="absolute inset-0 opacity-60" style={{
-          background: 'conic-gradient(from 0deg at 50% 50%, #2e8b57, #1a4d2e, #c0c0c0, #2e8b57)'
-        }} />
-      </div>
+      {/* 3D scene background */}
+      <SceneContainer className="absolute inset-0">
+        <HeroOrb />
+      </SceneContainer>
+      {/* overlay gradients - ensure they don't block interactions */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/30" aria-hidden />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-24 sm:pt-28 sm:pb-32">
         <motion.div
@@ -41,13 +39,14 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#contact"
+            <button
+              onClick={onOpenSchedule}
               className="inline-flex items-center justify-center gap-2 rounded-md bg-[#2e8b57] px-6 py-3 text-base font-medium text-white shadow-sm transition hover:bg-[#256f46] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2e8b57]"
+              aria-label="Open contact form to schedule your discovery call"
             >
               Schedule Your Discovery Call
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
+            </button>
             <a
               href="#work"
               className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-white/80 px-6 py-3 text-base font-medium text-slate-900 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2e8b57]"
@@ -55,6 +54,13 @@ export default function HeroSection() {
               <PlayCircle className="h-5 w-5 text-[#2e8b57]" aria-hidden="true" />
               See Our Work
             </a>
+          </div>
+
+          <div className="mt-10 text-slate-600">
+            <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#2e8b57]" />
+              Scroll to Explore
+            </span>
           </div>
         </motion.div>
       </div>
